@@ -1,0 +1,27 @@
+//Given an array containing N integers and an integer K., Your task is to find the length of the longest Sub-Array with the sum of the elements equal to the given value K.
+int lenOfLongSubarr(int A[],  int N, int K) 
+    { 
+        // Complete the function
+        int sum=0;
+        int ans=0;
+        map<int,int>mpp;
+        for(int i=0;i<N;i++)
+        {
+            sum+=A[i];
+            int left=sum-K;
+            if(left==0)
+            {
+                ans=max(ans,i+1);
+            }
+            if(mpp.find(left)!=mpp.end())
+            {
+                ans=max(ans,(i-mpp[left]));
+                
+            }
+            if(mpp.find(sum)==mpp.end()) //if already there is a sum present in the map then if we again replace the index then we wont get the longest array length so we should check carefully that if is not present then only we should keep
+            {
+                mpp[sum]=i;
+            }
+        }
+        return ans;
+    } 
