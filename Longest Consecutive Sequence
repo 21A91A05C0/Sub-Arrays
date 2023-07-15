@@ -15,7 +15,8 @@ int longestConsecutive(vector<int>& nums)
         }
         for(auto it:set)//
         {
-            if(set.find(it-1)==set.end())
+            if(set.find(it-1)==set.end())// if their is an element lesser than it then there is no need to check for greatest element presence since it canot be the longest 
+                                        // subsequence so no checking is done
             {
             
                 while(set.find(it)!=set.end())
