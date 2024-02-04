@@ -1,0 +1,73 @@
+Given two strings s and t of lengths m and n respectively, return the minimum window 
+substring
+ of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
+
+The testcases will be generated such that the answer is unique.
+
+ 
+
+Example 1:
+
+Input: s = "ADOBECODEBANC", t = "ABC"
+Output: "BANC"
+Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t.
+Example 2:
+
+Input: s = "a", t = "a"
+Output: "a"
+Explanation: The entire string s is the minimum window.
+Example 3:
+
+Input: s = "a", t = "aa"
+Output: ""
+Explanation: Both 'a's from t must be included in the window.
+Since the largest window of s only has one 'a', return empty string.
+
+class Solution {
+public:
+    string minWindow(string s, string t) 
+    {
+        vector<int>a(126,0);
+        vector<int>b(126,0);
+        int flag=0;
+        for(auto it:t) a[it]++;
+        int i=0;
+        int n=s.size();
+        int c=0,j=0,maxx=1e9;
+        int indi=0,indj=0;
+        while(i<n)
+        {
+            b[s[i]]++;
+            if(a[s[i]]==b[s[i]])
+            {
+                c+=a[s[i]];
+            }
+            while(j<n && b[s[j]]>a[s[j]])
+            {
+                b[s[j]]--;
+                j++;
+            }
+            if(c==t.size())
+            {
+                if((i-j+1)<maxx)
+                {
+                    indi=j;
+                    indj=i;
+                    maxx=(i-j+1);
+                    
+                }
+                flag=1;
+                
+            }
+            i++;
+        }
+        if(flag==0) return "";
+        string ans="";
+        for(int i=indi;i<=indj;i++)
+        {
+            ans+=s[i];
+        }
+        return ans;
+        
+    }
+};
