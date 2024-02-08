@@ -1,0 +1,38 @@
+// use prefix sum approach in order to caluclate the total number of subarrays
+int numberOfSubarrays(vector<int>& nums, int m) 
+    {
+        vector<int>prefix;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]%2==0) prefix.push_back(0);
+            else prefix.push_back(1);
+        }
+        int pre[prefix.size()];
+        pre[0]=prefix[0];
+        for(int i=1;i<prefix.size();i++)
+        {
+            pre[i]=prefix[i]+pre[i-1];
+        }
+        int ans=0;
+     //   for(int i=0;i<prefix.size();i++) cout<<pre[i]<<" ";
+        map<int,int>mpp;
+        mpp[0]=1;
+        for(int i=0;i<prefix.size();i++)
+        {
+            int k=pre[i]-m;
+          //  cout<<k<<" ";
+            if(mpp.find(k)!=mpp.end())
+            {
+             // cout<<mpp[k]<<" ";
+             //cout<<k<<" ";
+                ans+=mpp[k];
+                mpp[pre[i]]++;
+            }
+            else
+            {
+                mpp[pre[i]]++;
+            }
+        }
+        return ans;
+
+    }
